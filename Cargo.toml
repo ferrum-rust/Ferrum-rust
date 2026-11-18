@@ -1,0 +1,62 @@
+[package]
+name = "ferrum189"
+version = "0.4.0"
+edition = "2021"
+default-run = "ferrum189"
+description = "Experimental Minecraft 1.8.9-compatible single-player client with a Vulkan renderer"
+
+[[bin]]
+name = "ferrum189"
+path = "src/main.rs"
+
+[[bin]]
+name = "launcher"
+path = "src/bin/launcher.rs"
+
+[features]
+default = []
+# Public pinned wgpu profiling hooks only, in a separate opt-in diagnostic build.
+surface-wait-trace = ["dep:profiling", "profiling/profile-with-tracing", "dep:tracing"]
+
+[dependencies]
+ahash = "0.8.12"
+anyhow = "1.0"
+aes = "0.9"
+cfb8 = "0.9"
+rsa = "0.9"
+rand = "0.8"
+sha1 = "0.10"
+ureq = { version = "3", default-features = false, features = ["rustls"] }
+bytemuck = { version = "1.21", features = ["derive"] }
+clap = { version = "4.5", features = ["derive"] }
+flate2 = "1.0"
+glam = { version = "0.29", features = ["serde"] }
+image = { version = "0.25", default-features = false, features = ["png"] }
+pollster = "0.4"
+profiling = { version = "=1.0.18", default-features = false, optional = true }
+tracing = { version = "=0.1.44", default-features = false, features = ["std"], optional = true }
+rayon = "1.10"
+rodio = { version = "0.20.1", default-features = false, features = ["vorbis"] }
+unicode-bidi = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["float_roundtrip"] }
+wgpu = { version = "24.0.5", default-features = false, features = ["wgsl", "glsl", "vulkan-portability"] }
+winit = "0.30"
+zip = { version = "2.4", default-features = false, features = ["deflate"] }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+# Split the large native runtime into smaller LLVM modules so release builds fit
+# on the same 16 GiB machines that run the game. Thin LTO still optimizes across them.
+codegen-units = 16
+panic = "unwind"
+debug = 2
+
+[profile.dev]
+opt-level = 1
+debug = false
+incremental = false
+
+[profile.dev.package."*"]
+opt-level = 2

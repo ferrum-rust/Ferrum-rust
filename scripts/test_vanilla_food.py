@@ -1,0 +1,28 @@
+"""Export actual FoodStats and EntityPlayer exhaustion callbacks."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+from vanilla_world import ROOT, classpath, java_executable
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--jar',type=Path,default=Path(os.environ.get('APPDATA',str(Path.home())))/'.minecraft/versions/1.8.9/1.8.9.jar')
+    args=parser.parse_args();cp=classpath(args.jar)
+    classes=ROOT/'.local/vanilla-food-oracle/classes';classes.mkdir(parents=True,exist_ok=True)
+    subprocess.run(['javac','-encoding','UTF-8','-source','8','-target','8','-cp',cp,'-d',str(classes),str(ROOT/'tools/java/FoodOracle.java')],check=True)
+    output=subprocess.run([java_executable(),'-Xmx1G','-cp',str(classes)+os.pathsep+cp,'FoodOracle'],capture_output=True,text=True,encoding='utf-8')
+    if output.returncode:
+        print(output.stderr)
+        output.check_returncode()
+    data=json.loads(output.stdout);data['original_jar_sha256']=hashlib.sha256(args.jar.read_bytes()).hexdigest()
+    (ROOT/'tests/fixtures/vanilla189-food.json').write_text(json.dumps(data,separators=(',',':'))+'\n',encoding='utf-8')
+    table='// Original ItemFood metadata-specific nutrition.\nconst FOOD:&[(u16,u8,i32,u32,bool)]=&[\n'
+    table+='\n'.join(f'({item},{meta},{heal},{sat},{str(always).lower()}),' for item,meta,heal,sat,always in data['foods'])+'\n];\n'
+    table+='const HARVEST: [u8;256] = '+json.dumps(data['harvest_mask'])+';\n'
+    (ROOT/'src/vanilla/food_data.rs').write_text(table,encoding='utf-8')
+    print(f'Exported {len(data["ticks"])} hunger sequences, {len(data["actions"])} original player callbacks, {len(data["foods"])} food variants')
+
+if __name__=='__main__':main()

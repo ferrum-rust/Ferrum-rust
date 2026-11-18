@@ -1,0 +1,402 @@
+g	stat.leaveGame	number
+g	stat.playOneMinute	time
+g	stat.timeSinceDeath	time
+g	stat.walkOneCm	distance
+g	stat.crouchOneCm	distance
+g	stat.sprintOneCm	distance
+g	stat.swimOneCm	distance
+g	stat.fallOneCm	distance
+g	stat.climbOneCm	distance
+g	stat.flyOneCm	distance
+g	stat.diveOneCm	distance
+g	stat.minecartOneCm	distance
+g	stat.boatOneCm	distance
+g	stat.pigOneCm	distance
+g	stat.horseOneCm	distance
+g	stat.jump	number
+g	stat.drop	number
+g	stat.damageDealt	decimal
+g	stat.damageTaken	decimal
+g	stat.deaths	number
+g	stat.mobKills	number
+g	stat.animalsBred	number
+g	stat.playerKills	number
+g	stat.fishCaught	number
+g	stat.junkFished	number
+g	stat.treasureFished	number
+g	stat.talkedToVillager	number
+g	stat.tradedWithVillager	number
+g	stat.cakeSlicesEaten	number
+g	stat.cauldronFilled	number
+g	stat.cauldronUsed	number
+g	stat.armorCleaned	number
+g	stat.bannerCleaned	number
+g	stat.brewingstandInteraction	number
+g	stat.beaconInteraction	number
+g	stat.dropperInspected	number
+g	stat.hopperInspected	number
+g	stat.dispenserInspected	number
+g	stat.noteblockPlayed	number
+g	stat.noteblockTuned	number
+g	stat.flowerPotted	number
+g	stat.trappedChestTriggered	number
+g	stat.enderchestOpened	number
+g	stat.itemEnchanted	number
+g	stat.recordPlayed	number
+g	stat.furnaceInteraction	number
+g	stat.craftingTableInteraction	number
+g	stat.chestOpened	number
+b	1	stat.craftItem.minecraft.stone	stat.useItem.minecraft.stone	stat.mineBlock.minecraft.stone
+b	3	stat.craftItem.minecraft.dirt	stat.useItem.minecraft.dirt	stat.mineBlock.minecraft.dirt
+b	4	-	stat.useItem.minecraft.cobblestone	stat.mineBlock.minecraft.cobblestone
+b	5	stat.craftItem.minecraft.planks	stat.useItem.minecraft.planks	stat.mineBlock.minecraft.planks
+b	6	-	stat.useItem.minecraft.sapling	stat.mineBlock.minecraft.sapling
+b	12	-	stat.useItem.minecraft.sand	stat.mineBlock.minecraft.sand
+b	13	-	stat.useItem.minecraft.gravel	stat.mineBlock.minecraft.gravel
+b	14	-	stat.useItem.minecraft.gold_ore	stat.mineBlock.minecraft.gold_ore
+b	15	-	stat.useItem.minecraft.iron_ore	stat.mineBlock.minecraft.iron_ore
+b	16	-	stat.useItem.minecraft.coal_ore	stat.mineBlock.minecraft.coal_ore
+b	17	-	stat.useItem.minecraft.log	stat.mineBlock.minecraft.log
+b	18	-	stat.useItem.minecraft.leaves	stat.mineBlock.minecraft.leaves
+b	19	stat.craftItem.minecraft.sponge	stat.useItem.minecraft.sponge	stat.mineBlock.minecraft.sponge
+b	20	stat.craftItem.minecraft.glass	stat.useItem.minecraft.glass	stat.mineBlock.minecraft.glass
+b	21	-	stat.useItem.minecraft.lapis_ore	stat.mineBlock.minecraft.lapis_ore
+b	22	stat.craftItem.minecraft.lapis_block	stat.useItem.minecraft.lapis_block	stat.mineBlock.minecraft.lapis_block
+b	23	stat.craftItem.minecraft.dispenser	stat.useItem.minecraft.dispenser	stat.mineBlock.minecraft.dispenser
+b	24	stat.craftItem.minecraft.sandstone	stat.useItem.minecraft.sandstone	stat.mineBlock.minecraft.sandstone
+b	25	stat.craftItem.minecraft.noteblock	stat.useItem.minecraft.noteblock	stat.mineBlock.minecraft.noteblock
+b	27	stat.craftItem.minecraft.golden_rail	stat.useItem.minecraft.golden_rail	stat.mineBlock.minecraft.golden_rail
+b	28	stat.craftItem.minecraft.detector_rail	stat.useItem.minecraft.detector_rail	stat.mineBlock.minecraft.detector_rail
+b	29	stat.craftItem.minecraft.sticky_piston	stat.useItem.minecraft.sticky_piston	stat.mineBlock.minecraft.sticky_piston
+b	30	-	stat.useItem.minecraft.web	stat.mineBlock.minecraft.web
+b	31	-	stat.useItem.minecraft.tallgrass	stat.mineBlock.minecraft.tallgrass
+b	32	-	stat.useItem.minecraft.deadbush	stat.mineBlock.minecraft.deadbush
+b	33	stat.craftItem.minecraft.piston	stat.useItem.minecraft.piston	stat.mineBlock.minecraft.piston
+b	35	stat.craftItem.minecraft.wool	stat.useItem.minecraft.wool	stat.mineBlock.minecraft.wool
+b	37	-	stat.useItem.minecraft.yellow_flower	stat.mineBlock.minecraft.yellow_flower
+b	38	-	stat.useItem.minecraft.red_flower	stat.mineBlock.minecraft.red_flower
+b	39	-	stat.useItem.minecraft.brown_mushroom	stat.mineBlock.minecraft.brown_mushroom
+b	40	-	stat.useItem.minecraft.red_mushroom	stat.mineBlock.minecraft.red_mushroom
+b	41	stat.craftItem.minecraft.gold_block	stat.useItem.minecraft.gold_block	stat.mineBlock.minecraft.gold_block
+b	42	stat.craftItem.minecraft.iron_block	stat.useItem.minecraft.iron_block	stat.mineBlock.minecraft.iron_block
+b	44	stat.craftItem.minecraft.stone_slab	stat.useItem.minecraft.stone_slab	stat.mineBlock.minecraft.stone_slab
+b	45	stat.craftItem.minecraft.brick_block	stat.useItem.minecraft.brick_block	stat.mineBlock.minecraft.brick_block
+b	46	stat.craftItem.minecraft.tnt	stat.useItem.minecraft.tnt	stat.mineBlock.minecraft.tnt
+b	47	stat.craftItem.minecraft.bookshelf	stat.useItem.minecraft.bookshelf	stat.mineBlock.minecraft.bookshelf
+b	48	stat.craftItem.minecraft.mossy_cobblestone	stat.useItem.minecraft.mossy_cobblestone	stat.mineBlock.minecraft.mossy_cobblestone
+b	49	-	stat.useItem.minecraft.obsidian	stat.mineBlock.minecraft.obsidian
+b	50	stat.craftItem.minecraft.torch	stat.useItem.minecraft.torch	stat.mineBlock.minecraft.torch
+b	53	stat.craftItem.minecraft.oak_stairs	stat.useItem.minecraft.oak_stairs	stat.mineBlock.minecraft.oak_stairs
+b	54	stat.craftItem.minecraft.chest	stat.useItem.minecraft.chest	stat.mineBlock.minecraft.chest
+b	56	-	stat.useItem.minecraft.diamond_ore	stat.mineBlock.minecraft.diamond_ore
+b	57	stat.craftItem.minecraft.diamond_block	stat.useItem.minecraft.diamond_block	stat.mineBlock.minecraft.diamond_block
+b	58	stat.craftItem.minecraft.crafting_table	stat.useItem.minecraft.crafting_table	stat.mineBlock.minecraft.crafting_table
+b	61	stat.craftItem.minecraft.furnace	stat.useItem.minecraft.furnace	stat.mineBlock.minecraft.furnace
+b	65	stat.craftItem.minecraft.ladder	stat.useItem.minecraft.ladder	stat.mineBlock.minecraft.ladder
+b	66	stat.craftItem.minecraft.rail	stat.useItem.minecraft.rail	stat.mineBlock.minecraft.rail
+b	67	stat.craftItem.minecraft.stone_stairs	stat.useItem.minecraft.stone_stairs	stat.mineBlock.minecraft.stone_stairs
+b	69	stat.craftItem.minecraft.lever	stat.useItem.minecraft.lever	stat.mineBlock.minecraft.lever
+b	70	stat.craftItem.minecraft.stone_pressure_plate	stat.useItem.minecraft.stone_pressure_plate	stat.mineBlock.minecraft.stone_pressure_plate
+b	72	stat.craftItem.minecraft.wooden_pressure_plate	stat.useItem.minecraft.wooden_pressure_plate	stat.mineBlock.minecraft.wooden_pressure_plate
+b	73	-	stat.useItem.minecraft.redstone_ore	stat.mineBlock.minecraft.redstone_ore
+b	76	stat.craftItem.minecraft.redstone_torch	stat.useItem.minecraft.redstone_torch	stat.mineBlock.minecraft.redstone_torch
+b	77	stat.craftItem.minecraft.stone_button	stat.useItem.minecraft.stone_button	stat.mineBlock.minecraft.stone_button
+b	78	stat.craftItem.minecraft.snow_layer	stat.useItem.minecraft.snow_layer	stat.mineBlock.minecraft.snow_layer
+b	79	-	stat.useItem.minecraft.ice	stat.mineBlock.minecraft.ice
+b	80	stat.craftItem.minecraft.snow	stat.useItem.minecraft.snow	stat.mineBlock.minecraft.snow
+b	81	-	stat.useItem.minecraft.cactus	stat.mineBlock.minecraft.cactus
+b	82	stat.craftItem.minecraft.clay	stat.useItem.minecraft.clay	stat.mineBlock.minecraft.clay
+b	84	stat.craftItem.minecraft.jukebox	stat.useItem.minecraft.jukebox	stat.mineBlock.minecraft.jukebox
+b	85	stat.craftItem.minecraft.fence	stat.useItem.minecraft.fence	stat.mineBlock.minecraft.fence
+b	86	stat.craftItem.minecraft.lit_pumpkin	stat.useItem.minecraft.pumpkin	stat.mineBlock.minecraft.pumpkin
+b	87	-	stat.useItem.minecraft.netherrack	stat.mineBlock.minecraft.netherrack
+b	88	-	stat.useItem.minecraft.soul_sand	stat.mineBlock.minecraft.soul_sand
+b	89	stat.craftItem.minecraft.glowstone	stat.useItem.minecraft.glowstone	stat.mineBlock.minecraft.glowstone
+b	95	stat.craftItem.minecraft.stained_glass	stat.useItem.minecraft.stained_glass	stat.mineBlock.minecraft.stained_glass
+b	97	-	stat.useItem.minecraft.monster_egg	stat.mineBlock.minecraft.monster_egg
+b	98	stat.craftItem.minecraft.stonebrick	stat.useItem.minecraft.stonebrick	stat.mineBlock.minecraft.stonebrick
+b	99	-	stat.useItem.minecraft.brown_mushroom_block	stat.mineBlock.minecraft.brown_mushroom_block
+b	100	-	stat.useItem.minecraft.red_mushroom_block	stat.mineBlock.minecraft.red_mushroom_block
+b	101	stat.craftItem.minecraft.iron_bars	stat.useItem.minecraft.iron_bars	stat.mineBlock.minecraft.iron_bars
+b	102	stat.craftItem.minecraft.glass_pane	stat.useItem.minecraft.glass_pane	stat.mineBlock.minecraft.glass_pane
+b	103	stat.craftItem.minecraft.melon_block	stat.useItem.minecraft.melon_block	stat.mineBlock.minecraft.melon_block
+b	106	-	stat.useItem.minecraft.vine	stat.mineBlock.minecraft.vine
+b	107	stat.craftItem.minecraft.fence_gate	stat.useItem.minecraft.fence_gate	stat.mineBlock.minecraft.fence_gate
+b	108	stat.craftItem.minecraft.brick_stairs	stat.useItem.minecraft.brick_stairs	stat.mineBlock.minecraft.brick_stairs
+b	109	stat.craftItem.minecraft.stone_brick_stairs	stat.useItem.minecraft.stone_brick_stairs	stat.mineBlock.minecraft.stone_brick_stairs
+b	110	-	stat.useItem.minecraft.mycelium	stat.mineBlock.minecraft.mycelium
+b	111	-	stat.useItem.minecraft.waterlily	stat.mineBlock.minecraft.waterlily
+b	112	stat.craftItem.minecraft.nether_brick	stat.useItem.minecraft.nether_brick	stat.mineBlock.minecraft.nether_brick
+b	113	stat.craftItem.minecraft.nether_brick_fence	stat.useItem.minecraft.nether_brick_fence	stat.mineBlock.minecraft.nether_brick_fence
+b	114	stat.craftItem.minecraft.nether_brick_stairs	stat.useItem.minecraft.nether_brick_stairs	stat.mineBlock.minecraft.nether_brick_stairs
+b	116	stat.craftItem.minecraft.enchanting_table	stat.useItem.minecraft.enchanting_table	stat.mineBlock.minecraft.enchanting_table
+b	120	-	stat.useItem.minecraft.end_portal_frame	stat.mineBlock.minecraft.end_portal_frame
+b	121	-	stat.useItem.minecraft.end_stone	stat.mineBlock.minecraft.end_stone
+b	122	-	stat.useItem.minecraft.dragon_egg	stat.mineBlock.minecraft.dragon_egg
+b	123	stat.craftItem.minecraft.redstone_lamp	stat.useItem.minecraft.redstone_lamp	stat.mineBlock.minecraft.redstone_lamp
+b	126	stat.craftItem.minecraft.wooden_slab	stat.useItem.minecraft.wooden_slab	stat.mineBlock.minecraft.wooden_slab
+b	128	stat.craftItem.minecraft.sandstone_stairs	stat.useItem.minecraft.sandstone_stairs	stat.mineBlock.minecraft.sandstone_stairs
+b	129	-	stat.useItem.minecraft.emerald_ore	stat.mineBlock.minecraft.emerald_ore
+b	130	stat.craftItem.minecraft.ender_chest	stat.useItem.minecraft.ender_chest	stat.mineBlock.minecraft.ender_chest
+b	131	stat.craftItem.minecraft.tripwire_hook	stat.useItem.minecraft.tripwire_hook	stat.mineBlock.minecraft.tripwire_hook
+b	133	stat.craftItem.minecraft.emerald_block	stat.useItem.minecraft.emerald_block	stat.mineBlock.minecraft.emerald_block
+b	134	stat.craftItem.minecraft.spruce_stairs	stat.useItem.minecraft.spruce_stairs	stat.mineBlock.minecraft.spruce_stairs
+b	135	stat.craftItem.minecraft.birch_stairs	stat.useItem.minecraft.birch_stairs	stat.mineBlock.minecraft.birch_stairs
+b	136	stat.craftItem.minecraft.jungle_stairs	stat.useItem.minecraft.jungle_stairs	stat.mineBlock.minecraft.jungle_stairs
+b	137	-	stat.useItem.minecraft.command_block	stat.mineBlock.minecraft.command_block
+b	138	stat.craftItem.minecraft.beacon	stat.useItem.minecraft.beacon	stat.mineBlock.minecraft.beacon
+b	139	stat.craftItem.minecraft.cobblestone_wall	stat.useItem.minecraft.cobblestone_wall	stat.mineBlock.minecraft.cobblestone_wall
+b	143	stat.craftItem.minecraft.wooden_button	stat.useItem.minecraft.wooden_button	stat.mineBlock.minecraft.wooden_button
+b	145	stat.craftItem.minecraft.anvil	stat.useItem.minecraft.anvil	stat.mineBlock.minecraft.anvil
+b	146	stat.craftItem.minecraft.trapped_chest	stat.useItem.minecraft.trapped_chest	stat.mineBlock.minecraft.trapped_chest
+b	147	stat.craftItem.minecraft.light_weighted_pressure_plate	stat.useItem.minecraft.light_weighted_pressure_plate	stat.mineBlock.minecraft.light_weighted_pressure_plate
+b	148	stat.craftItem.minecraft.heavy_weighted_pressure_plate	stat.useItem.minecraft.heavy_weighted_pressure_plate	stat.mineBlock.minecraft.heavy_weighted_pressure_plate
+b	151	stat.craftItem.minecraft.daylight_detector	stat.useItem.minecraft.daylight_detector	stat.mineBlock.minecraft.daylight_detector
+b	152	stat.craftItem.minecraft.redstone_block	stat.useItem.minecraft.redstone_block	stat.mineBlock.minecraft.redstone_block
+b	153	-	stat.useItem.minecraft.quartz_ore	stat.mineBlock.minecraft.quartz_ore
+b	154	stat.craftItem.minecraft.hopper	stat.useItem.minecraft.hopper	stat.mineBlock.minecraft.hopper
+b	155	stat.craftItem.minecraft.quartz_block	stat.useItem.minecraft.quartz_block	stat.mineBlock.minecraft.quartz_block
+b	156	stat.craftItem.minecraft.quartz_stairs	stat.useItem.minecraft.quartz_stairs	stat.mineBlock.minecraft.quartz_stairs
+b	157	stat.craftItem.minecraft.activator_rail	stat.useItem.minecraft.activator_rail	stat.mineBlock.minecraft.activator_rail
+b	158	stat.craftItem.minecraft.dropper	stat.useItem.minecraft.dropper	stat.mineBlock.minecraft.dropper
+b	159	stat.craftItem.minecraft.stained_hardened_clay	stat.useItem.minecraft.stained_hardened_clay	stat.mineBlock.minecraft.stained_hardened_clay
+b	160	stat.craftItem.minecraft.stained_glass_pane	stat.useItem.minecraft.stained_glass_pane	stat.mineBlock.minecraft.stained_glass_pane
+b	161	-	stat.useItem.minecraft.leaves2	stat.mineBlock.minecraft.leaves2
+b	162	-	stat.useItem.minecraft.log2	stat.mineBlock.minecraft.log2
+b	163	stat.craftItem.minecraft.acacia_stairs	stat.useItem.minecraft.acacia_stairs	stat.mineBlock.minecraft.acacia_stairs
+b	164	stat.craftItem.minecraft.dark_oak_stairs	stat.useItem.minecraft.dark_oak_stairs	stat.mineBlock.minecraft.dark_oak_stairs
+b	165	stat.craftItem.minecraft.slime	stat.useItem.minecraft.slime	stat.mineBlock.minecraft.slime
+b	168	stat.craftItem.minecraft.prismarine	stat.useItem.minecraft.prismarine	stat.mineBlock.minecraft.prismarine
+b	169	stat.craftItem.minecraft.sea_lantern	stat.useItem.minecraft.sea_lantern	stat.mineBlock.minecraft.sea_lantern
+b	170	stat.craftItem.minecraft.hay_block	stat.useItem.minecraft.hay_block	stat.mineBlock.minecraft.hay_block
+b	171	stat.craftItem.minecraft.carpet	stat.useItem.minecraft.carpet	stat.mineBlock.minecraft.carpet
+b	172	stat.craftItem.minecraft.hardened_clay	stat.useItem.minecraft.hardened_clay	stat.mineBlock.minecraft.hardened_clay
+b	173	stat.craftItem.minecraft.coal_block	stat.useItem.minecraft.coal_block	stat.mineBlock.minecraft.coal_block
+b	174	-	stat.useItem.minecraft.packed_ice	stat.mineBlock.minecraft.packed_ice
+b	175	-	stat.useItem.minecraft.double_plant	stat.mineBlock.minecraft.double_plant
+b	179	stat.craftItem.minecraft.red_sandstone	stat.useItem.minecraft.red_sandstone	stat.mineBlock.minecraft.red_sandstone
+b	180	stat.craftItem.minecraft.red_sandstone_stairs	stat.useItem.minecraft.red_sandstone_stairs	stat.mineBlock.minecraft.red_sandstone_stairs
+b	182	stat.craftItem.minecraft.stone_slab2	stat.useItem.minecraft.stone_slab2	stat.mineBlock.minecraft.stone_slab2
+b	183	stat.craftItem.minecraft.spruce_fence_gate	stat.useItem.minecraft.spruce_fence_gate	stat.mineBlock.minecraft.spruce_fence_gate
+b	184	stat.craftItem.minecraft.birch_fence_gate	stat.useItem.minecraft.birch_fence_gate	stat.mineBlock.minecraft.birch_fence_gate
+b	185	stat.craftItem.minecraft.jungle_fence_gate	stat.useItem.minecraft.jungle_fence_gate	stat.mineBlock.minecraft.jungle_fence_gate
+b	186	stat.craftItem.minecraft.dark_oak_fence_gate	stat.useItem.minecraft.dark_oak_fence_gate	stat.mineBlock.minecraft.dark_oak_fence_gate
+b	187	stat.craftItem.minecraft.acacia_fence_gate	stat.useItem.minecraft.acacia_fence_gate	stat.mineBlock.minecraft.acacia_fence_gate
+b	188	stat.craftItem.minecraft.spruce_fence	stat.useItem.minecraft.spruce_fence	stat.mineBlock.minecraft.spruce_fence
+b	189	stat.craftItem.minecraft.birch_fence	stat.useItem.minecraft.birch_fence	stat.mineBlock.minecraft.birch_fence
+b	190	stat.craftItem.minecraft.jungle_fence	stat.useItem.minecraft.jungle_fence	stat.mineBlock.minecraft.jungle_fence
+b	191	stat.craftItem.minecraft.dark_oak_fence	stat.useItem.minecraft.dark_oak_fence	stat.mineBlock.minecraft.dark_oak_fence
+b	192	stat.craftItem.minecraft.acacia_fence	stat.useItem.minecraft.acacia_fence	stat.mineBlock.minecraft.acacia_fence
+i	256	stat.breakItem.minecraft.iron_shovel	stat.craftItem.minecraft.iron_shovel	stat.useItem.minecraft.iron_shovel
+i	257	stat.breakItem.minecraft.iron_pickaxe	stat.craftItem.minecraft.iron_pickaxe	stat.useItem.minecraft.iron_pickaxe
+i	258	stat.breakItem.minecraft.iron_axe	stat.craftItem.minecraft.iron_axe	stat.useItem.minecraft.iron_axe
+i	259	stat.breakItem.minecraft.flint_and_steel	stat.craftItem.minecraft.flint_and_steel	stat.useItem.minecraft.flint_and_steel
+i	260	-	-	stat.useItem.minecraft.apple
+i	261	stat.breakItem.minecraft.bow	stat.craftItem.minecraft.bow	stat.useItem.minecraft.bow
+i	262	-	stat.craftItem.minecraft.arrow	stat.useItem.minecraft.arrow
+i	263	-	stat.craftItem.minecraft.coal	stat.useItem.minecraft.coal
+i	264	-	stat.craftItem.minecraft.diamond	stat.useItem.minecraft.diamond
+i	265	-	stat.craftItem.minecraft.iron_ingot	stat.useItem.minecraft.iron_ingot
+i	266	-	stat.craftItem.minecraft.gold_ingot	stat.useItem.minecraft.gold_ingot
+i	267	stat.breakItem.minecraft.iron_sword	stat.craftItem.minecraft.iron_sword	stat.useItem.minecraft.iron_sword
+i	268	stat.breakItem.minecraft.wooden_sword	stat.craftItem.minecraft.wooden_sword	stat.useItem.minecraft.wooden_sword
+i	269	stat.breakItem.minecraft.wooden_shovel	stat.craftItem.minecraft.wooden_shovel	stat.useItem.minecraft.wooden_shovel
+i	270	stat.breakItem.minecraft.wooden_pickaxe	stat.craftItem.minecraft.wooden_pickaxe	stat.useItem.minecraft.wooden_pickaxe
+i	271	stat.breakItem.minecraft.wooden_axe	stat.craftItem.minecraft.wooden_axe	stat.useItem.minecraft.wooden_axe
+i	272	stat.breakItem.minecraft.stone_sword	stat.craftItem.minecraft.stone_sword	stat.useItem.minecraft.stone_sword
+i	273	stat.breakItem.minecraft.stone_shovel	stat.craftItem.minecraft.stone_shovel	stat.useItem.minecraft.stone_shovel
+i	274	stat.breakItem.minecraft.stone_pickaxe	stat.craftItem.minecraft.stone_pickaxe	stat.useItem.minecraft.stone_pickaxe
+i	275	stat.breakItem.minecraft.stone_axe	stat.craftItem.minecraft.stone_axe	stat.useItem.minecraft.stone_axe
+i	276	stat.breakItem.minecraft.diamond_sword	stat.craftItem.minecraft.diamond_sword	stat.useItem.minecraft.diamond_sword
+i	277	stat.breakItem.minecraft.diamond_shovel	stat.craftItem.minecraft.diamond_shovel	stat.useItem.minecraft.diamond_shovel
+i	278	stat.breakItem.minecraft.diamond_pickaxe	stat.craftItem.minecraft.diamond_pickaxe	stat.useItem.minecraft.diamond_pickaxe
+i	279	stat.breakItem.minecraft.diamond_axe	stat.craftItem.minecraft.diamond_axe	stat.useItem.minecraft.diamond_axe
+i	280	-	stat.craftItem.minecraft.stick	stat.useItem.minecraft.stick
+i	281	-	stat.craftItem.minecraft.bowl	stat.useItem.minecraft.bowl
+i	282	-	stat.craftItem.minecraft.mushroom_stew	stat.useItem.minecraft.mushroom_stew
+i	283	stat.breakItem.minecraft.golden_sword	stat.craftItem.minecraft.golden_sword	stat.useItem.minecraft.golden_sword
+i	284	stat.breakItem.minecraft.golden_shovel	stat.craftItem.minecraft.golden_shovel	stat.useItem.minecraft.golden_shovel
+i	285	stat.breakItem.minecraft.golden_pickaxe	stat.craftItem.minecraft.golden_pickaxe	stat.useItem.minecraft.golden_pickaxe
+i	286	stat.breakItem.minecraft.golden_axe	stat.craftItem.minecraft.golden_axe	stat.useItem.minecraft.golden_axe
+i	287	-	-	stat.useItem.minecraft.string
+i	288	-	-	stat.useItem.minecraft.feather
+i	289	-	-	stat.useItem.minecraft.gunpowder
+i	290	stat.breakItem.minecraft.wooden_hoe	stat.craftItem.minecraft.wooden_hoe	stat.useItem.minecraft.wooden_hoe
+i	291	stat.breakItem.minecraft.stone_hoe	stat.craftItem.minecraft.stone_hoe	stat.useItem.minecraft.stone_hoe
+i	292	stat.breakItem.minecraft.iron_hoe	stat.craftItem.minecraft.iron_hoe	stat.useItem.minecraft.iron_hoe
+i	293	stat.breakItem.minecraft.diamond_hoe	stat.craftItem.minecraft.diamond_hoe	stat.useItem.minecraft.diamond_hoe
+i	294	stat.breakItem.minecraft.golden_hoe	stat.craftItem.minecraft.golden_hoe	stat.useItem.minecraft.golden_hoe
+i	295	-	-	stat.useItem.minecraft.wheat_seeds
+i	296	-	stat.craftItem.minecraft.wheat	stat.useItem.minecraft.wheat
+i	297	-	stat.craftItem.minecraft.bread	stat.useItem.minecraft.bread
+i	298	stat.breakItem.minecraft.leather_helmet	stat.craftItem.minecraft.leather_helmet	stat.useItem.minecraft.leather_helmet
+i	299	stat.breakItem.minecraft.leather_chestplate	stat.craftItem.minecraft.leather_chestplate	stat.useItem.minecraft.leather_chestplate
+i	300	stat.breakItem.minecraft.leather_leggings	stat.craftItem.minecraft.leather_leggings	stat.useItem.minecraft.leather_leggings
+i	301	stat.breakItem.minecraft.leather_boots	stat.craftItem.minecraft.leather_boots	stat.useItem.minecraft.leather_boots
+i	302	stat.breakItem.minecraft.chainmail_helmet	-	stat.useItem.minecraft.chainmail_helmet
+i	303	stat.breakItem.minecraft.chainmail_chestplate	-	stat.useItem.minecraft.chainmail_chestplate
+i	304	stat.breakItem.minecraft.chainmail_leggings	-	stat.useItem.minecraft.chainmail_leggings
+i	305	stat.breakItem.minecraft.chainmail_boots	-	stat.useItem.minecraft.chainmail_boots
+i	306	stat.breakItem.minecraft.iron_helmet	stat.craftItem.minecraft.iron_helmet	stat.useItem.minecraft.iron_helmet
+i	307	stat.breakItem.minecraft.iron_chestplate	stat.craftItem.minecraft.iron_chestplate	stat.useItem.minecraft.iron_chestplate
+i	308	stat.breakItem.minecraft.iron_leggings	stat.craftItem.minecraft.iron_leggings	stat.useItem.minecraft.iron_leggings
+i	309	stat.breakItem.minecraft.iron_boots	stat.craftItem.minecraft.iron_boots	stat.useItem.minecraft.iron_boots
+i	310	stat.breakItem.minecraft.diamond_helmet	stat.craftItem.minecraft.diamond_helmet	stat.useItem.minecraft.diamond_helmet
+i	311	stat.breakItem.minecraft.diamond_chestplate	stat.craftItem.minecraft.diamond_chestplate	stat.useItem.minecraft.diamond_chestplate
+i	312	stat.breakItem.minecraft.diamond_leggings	stat.craftItem.minecraft.diamond_leggings	stat.useItem.minecraft.diamond_leggings
+i	313	stat.breakItem.minecraft.diamond_boots	stat.craftItem.minecraft.diamond_boots	stat.useItem.minecraft.diamond_boots
+i	314	stat.breakItem.minecraft.golden_helmet	stat.craftItem.minecraft.golden_helmet	stat.useItem.minecraft.golden_helmet
+i	315	stat.breakItem.minecraft.golden_chestplate	stat.craftItem.minecraft.golden_chestplate	stat.useItem.minecraft.golden_chestplate
+i	316	stat.breakItem.minecraft.golden_leggings	stat.craftItem.minecraft.golden_leggings	stat.useItem.minecraft.golden_leggings
+i	317	stat.breakItem.minecraft.golden_boots	stat.craftItem.minecraft.golden_boots	stat.useItem.minecraft.golden_boots
+i	318	-	-	stat.useItem.minecraft.flint
+i	319	-	-	stat.useItem.minecraft.porkchop
+i	320	-	stat.craftItem.minecraft.cooked_porkchop	stat.useItem.minecraft.cooked_porkchop
+i	321	-	stat.craftItem.minecraft.painting	stat.useItem.minecraft.painting
+i	322	-	stat.craftItem.minecraft.golden_apple	stat.useItem.minecraft.golden_apple
+i	323	-	stat.craftItem.minecraft.sign	stat.useItem.minecraft.sign
+i	324	-	stat.craftItem.minecraft.wooden_door	stat.useItem.minecraft.wooden_door
+i	325	-	stat.craftItem.minecraft.bucket	stat.useItem.minecraft.bucket
+i	326	-	-	stat.useItem.minecraft.water_bucket
+i	327	-	-	stat.useItem.minecraft.lava_bucket
+i	328	-	stat.craftItem.minecraft.minecart	stat.useItem.minecraft.minecart
+i	329	-	-	stat.useItem.minecraft.saddle
+i	330	-	stat.craftItem.minecraft.iron_door	stat.useItem.minecraft.iron_door
+i	331	-	stat.craftItem.minecraft.redstone	stat.useItem.minecraft.redstone
+i	332	-	-	stat.useItem.minecraft.snowball
+i	333	-	stat.craftItem.minecraft.boat	stat.useItem.minecraft.boat
+i	334	-	stat.craftItem.minecraft.leather	stat.useItem.minecraft.leather
+i	335	-	-	stat.useItem.minecraft.milk_bucket
+i	336	-	stat.craftItem.minecraft.brick	stat.useItem.minecraft.brick
+i	337	-	-	stat.useItem.minecraft.clay_ball
+i	338	-	-	stat.useItem.minecraft.reeds
+i	339	-	stat.craftItem.minecraft.paper	stat.useItem.minecraft.paper
+i	340	-	stat.craftItem.minecraft.book	stat.useItem.minecraft.book
+i	341	-	stat.craftItem.minecraft.slime_ball	stat.useItem.minecraft.slime_ball
+i	342	-	stat.craftItem.minecraft.chest_minecart	stat.useItem.minecraft.chest_minecart
+i	343	-	stat.craftItem.minecraft.furnace_minecart	stat.useItem.minecraft.furnace_minecart
+i	344	-	-	stat.useItem.minecraft.egg
+i	345	-	stat.craftItem.minecraft.compass	stat.useItem.minecraft.compass
+i	346	stat.breakItem.minecraft.fishing_rod	stat.craftItem.minecraft.fishing_rod	stat.useItem.minecraft.fishing_rod
+i	347	-	stat.craftItem.minecraft.clock	stat.useItem.minecraft.clock
+i	348	-	-	stat.useItem.minecraft.glowstone_dust
+i	349	-	-	stat.useItem.minecraft.fish
+i	350	-	stat.craftItem.minecraft.cooked_fish	stat.useItem.minecraft.cooked_fish
+i	351	-	stat.craftItem.minecraft.dye	stat.useItem.minecraft.dye
+i	352	-	-	stat.useItem.minecraft.bone
+i	353	-	stat.craftItem.minecraft.sugar	stat.useItem.minecraft.sugar
+i	354	-	stat.craftItem.minecraft.cake	stat.useItem.minecraft.cake
+i	355	-	stat.craftItem.minecraft.bed	stat.useItem.minecraft.bed
+i	356	-	stat.craftItem.minecraft.repeater	stat.useItem.minecraft.repeater
+i	357	-	stat.craftItem.minecraft.cookie	stat.useItem.minecraft.cookie
+i	358	-	-	stat.useItem.minecraft.filled_map
+i	359	stat.breakItem.minecraft.shears	stat.craftItem.minecraft.shears	stat.useItem.minecraft.shears
+i	360	-	-	stat.useItem.minecraft.melon
+i	361	-	stat.craftItem.minecraft.pumpkin_seeds	stat.useItem.minecraft.pumpkin_seeds
+i	362	-	stat.craftItem.minecraft.melon_seeds	stat.useItem.minecraft.melon_seeds
+i	363	-	-	stat.useItem.minecraft.beef
+i	364	-	stat.craftItem.minecraft.cooked_beef	stat.useItem.minecraft.cooked_beef
+i	365	-	-	stat.useItem.minecraft.chicken
+i	366	-	stat.craftItem.minecraft.cooked_chicken	stat.useItem.minecraft.cooked_chicken
+i	367	-	-	stat.useItem.minecraft.rotten_flesh
+i	368	-	-	stat.useItem.minecraft.ender_pearl
+i	369	-	-	stat.useItem.minecraft.blaze_rod
+i	370	-	-	stat.useItem.minecraft.ghast_tear
+i	371	-	stat.craftItem.minecraft.gold_nugget	stat.useItem.minecraft.gold_nugget
+i	372	-	-	stat.useItem.minecraft.nether_wart
+i	373	-	-	stat.useItem.minecraft.potion
+i	374	-	stat.craftItem.minecraft.glass_bottle	stat.useItem.minecraft.glass_bottle
+i	375	-	-	stat.useItem.minecraft.spider_eye
+i	376	-	stat.craftItem.minecraft.fermented_spider_eye	stat.useItem.minecraft.fermented_spider_eye
+i	377	-	stat.craftItem.minecraft.blaze_powder	stat.useItem.minecraft.blaze_powder
+i	378	-	stat.craftItem.minecraft.magma_cream	stat.useItem.minecraft.magma_cream
+i	379	-	stat.craftItem.minecraft.brewing_stand	stat.useItem.minecraft.brewing_stand
+i	380	-	stat.craftItem.minecraft.cauldron	stat.useItem.minecraft.cauldron
+i	381	-	stat.craftItem.minecraft.ender_eye	stat.useItem.minecraft.ender_eye
+i	382	-	stat.craftItem.minecraft.speckled_melon	stat.useItem.minecraft.speckled_melon
+i	383	-	-	stat.useItem.minecraft.spawn_egg
+i	384	-	-	stat.useItem.minecraft.experience_bottle
+i	385	-	stat.craftItem.minecraft.fire_charge	stat.useItem.minecraft.fire_charge
+i	386	-	stat.craftItem.minecraft.writable_book	stat.useItem.minecraft.writable_book
+i	387	-	-	stat.useItem.minecraft.written_book
+i	388	-	stat.craftItem.minecraft.emerald	stat.useItem.minecraft.emerald
+i	389	-	stat.craftItem.minecraft.item_frame	stat.useItem.minecraft.item_frame
+i	390	-	stat.craftItem.minecraft.flower_pot	stat.useItem.minecraft.flower_pot
+i	391	-	-	stat.useItem.minecraft.carrot
+i	392	-	-	stat.useItem.minecraft.potato
+i	393	-	stat.craftItem.minecraft.baked_potato	stat.useItem.minecraft.baked_potato
+i	394	-	-	stat.useItem.minecraft.poisonous_potato
+i	395	-	stat.craftItem.minecraft.map	stat.useItem.minecraft.map
+i	396	-	stat.craftItem.minecraft.golden_carrot	stat.useItem.minecraft.golden_carrot
+i	397	-	-	stat.useItem.minecraft.skull
+i	398	stat.breakItem.minecraft.carrot_on_a_stick	stat.craftItem.minecraft.carrot_on_a_stick	stat.useItem.minecraft.carrot_on_a_stick
+i	399	-	-	stat.useItem.minecraft.nether_star
+i	400	-	stat.craftItem.minecraft.pumpkin_pie	stat.useItem.minecraft.pumpkin_pie
+i	401	-	-	stat.useItem.minecraft.fireworks
+i	402	-	-	stat.useItem.minecraft.firework_charge
+i	403	-	-	stat.useItem.minecraft.enchanted_book
+i	404	-	stat.craftItem.minecraft.comparator	stat.useItem.minecraft.comparator
+i	405	-	stat.craftItem.minecraft.netherbrick	stat.useItem.minecraft.netherbrick
+i	406	-	stat.craftItem.minecraft.quartz	stat.useItem.minecraft.quartz
+i	407	-	stat.craftItem.minecraft.tnt_minecart	stat.useItem.minecraft.tnt_minecart
+i	408	-	stat.craftItem.minecraft.hopper_minecart	stat.useItem.minecraft.hopper_minecart
+i	409	-	-	stat.useItem.minecraft.prismarine_shard
+i	410	-	-	stat.useItem.minecraft.prismarine_crystals
+i	411	-	-	stat.useItem.minecraft.rabbit
+i	412	-	stat.craftItem.minecraft.cooked_rabbit	stat.useItem.minecraft.cooked_rabbit
+i	413	-	stat.craftItem.minecraft.rabbit_stew	stat.useItem.minecraft.rabbit_stew
+i	414	-	-	stat.useItem.minecraft.rabbit_foot
+i	415	-	-	stat.useItem.minecraft.rabbit_hide
+i	416	-	stat.craftItem.minecraft.armor_stand	stat.useItem.minecraft.armor_stand
+i	417	-	-	stat.useItem.minecraft.iron_horse_armor
+i	418	-	-	stat.useItem.minecraft.golden_horse_armor
+i	419	-	-	stat.useItem.minecraft.diamond_horse_armor
+i	420	-	stat.craftItem.minecraft.lead	stat.useItem.minecraft.lead
+i	421	-	-	stat.useItem.minecraft.name_tag
+i	422	-	-	stat.useItem.minecraft.command_block_minecart
+i	423	-	-	stat.useItem.minecraft.mutton
+i	424	-	stat.craftItem.minecraft.cooked_mutton	stat.useItem.minecraft.cooked_mutton
+i	427	-	stat.craftItem.minecraft.spruce_door	stat.useItem.minecraft.spruce_door
+i	428	-	stat.craftItem.minecraft.birch_door	stat.useItem.minecraft.birch_door
+i	429	-	stat.craftItem.minecraft.jungle_door	stat.useItem.minecraft.jungle_door
+i	430	-	stat.craftItem.minecraft.acacia_door	stat.useItem.minecraft.acacia_door
+i	431	-	stat.craftItem.minecraft.dark_oak_door	stat.useItem.minecraft.dark_oak_door
+i	2256	-	-	stat.useItem.minecraft.record_13
+i	2257	-	-	stat.useItem.minecraft.record_cat
+i	2258	-	-	stat.useItem.minecraft.record_blocks
+i	2259	-	-	stat.useItem.minecraft.record_chirp
+i	2260	-	-	stat.useItem.minecraft.record_far
+i	2261	-	-	stat.useItem.minecraft.record_mall
+i	2262	-	-	stat.useItem.minecraft.record_mellohi
+i	2263	-	-	stat.useItem.minecraft.record_stal
+i	2264	-	-	stat.useItem.minecraft.record_strad
+i	2265	-	-	stat.useItem.minecraft.record_ward
+i	2266	-	-	stat.useItem.minecraft.record_11
+i	2267	-	-	stat.useItem.minecraft.record_wait
+m	Creeper	stat.killEntity.Creeper	stat.entityKilledBy.Creeper
+m	Skeleton	stat.killEntity.Skeleton	stat.entityKilledBy.Skeleton
+m	Spider	stat.killEntity.Spider	stat.entityKilledBy.Spider
+m	Zombie	stat.killEntity.Zombie	stat.entityKilledBy.Zombie
+m	Slime	stat.killEntity.Slime	stat.entityKilledBy.Slime
+m	Ghast	stat.killEntity.Ghast	stat.entityKilledBy.Ghast
+m	PigZombie	stat.killEntity.PigZombie	stat.entityKilledBy.PigZombie
+m	Enderman	stat.killEntity.Enderman	stat.entityKilledBy.Enderman
+m	CaveSpider	stat.killEntity.CaveSpider	stat.entityKilledBy.CaveSpider
+m	Silverfish	stat.killEntity.Silverfish	stat.entityKilledBy.Silverfish
+m	Blaze	stat.killEntity.Blaze	stat.entityKilledBy.Blaze
+m	LavaSlime	stat.killEntity.LavaSlime	stat.entityKilledBy.LavaSlime
+m	Bat	stat.killEntity.Bat	stat.entityKilledBy.Bat
+m	Witch	stat.killEntity.Witch	stat.entityKilledBy.Witch
+m	Endermite	stat.killEntity.Endermite	stat.entityKilledBy.Endermite
+m	Guardian	stat.killEntity.Guardian	stat.entityKilledBy.Guardian
+m	Pig	stat.killEntity.Pig	stat.entityKilledBy.Pig
+m	Sheep	stat.killEntity.Sheep	stat.entityKilledBy.Sheep
+m	Cow	stat.killEntity.Cow	stat.entityKilledBy.Cow
+m	Chicken	stat.killEntity.Chicken	stat.entityKilledBy.Chicken
+m	Squid	stat.killEntity.Squid	stat.entityKilledBy.Squid
+m	Wolf	stat.killEntity.Wolf	stat.entityKilledBy.Wolf
+m	MushroomCow	stat.killEntity.MushroomCow	stat.entityKilledBy.MushroomCow
+m	Ozelot	stat.killEntity.Ozelot	stat.entityKilledBy.Ozelot
+m	EntityHorse	stat.killEntity.EntityHorse	stat.entityKilledBy.EntityHorse
+m	Rabbit	stat.killEntity.Rabbit	stat.entityKilledBy.Rabbit
+m	Villager	stat.killEntity.Villager	stat.entityKilledBy.Villager

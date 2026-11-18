@@ -1,0 +1,52 @@
+ja-jp-u-ca-japanese-x-lvariant-jp	Gy.MM.dd H:mm
+he,he-il	HH:mm dd/MM/yy
+vi,vi-vn	HH:mm dd/MM/yyyy
+en,en-ph,en-us,es-us,hi,und	M/d/yy h:mm a
+es-hn,es-ni,es-pr,es-sv	MM-dd-yy hh:mm a
+es-pa	MM/dd/yy hh:mm a
+nl,nl-nl	d-M-yy H:mm
+sl,sl-si	d.M.y H:mm
+be,be-by	d.M.yy H.mm
+cs,cs-cz	d.M.yy H:mm
+mk,mk-mk	d.M.yy HH:mm
+sr,sr-cs,sr-latn,sr-latn-ba,sr-latn-me,sr-latn-rs,sr-me,sr-rs	d.M.yy. HH.mm
+fi,fi-fi,sk,sk-sk	d.M.yyyy H:mm
+is,is-is	d.M.yyyy HH:mm
+et,et-ee	d.MM.yy H:mm
+en-in,en-sg,hi-in	d/M/yy h:mm a
+el,el-gr	d/M/yyyy h:mm a
+th,th-th,th-th-u-nu-thai-x-lvariant-th	d/M/yyyy, H:mm' น.'
+es,es-cu,es-es,fr-be,nl-be	d/MM/yy H:mm
+en-au,en-nz	d/MM/yy h:mm a
+es-co,es-gt,es-mx	d/MM/yy hh:mm a
+es-cl	dd-MM-yy H:mm
+da,da-dk	dd-MM-yy HH:mm
+es-bo	dd-MM-yy hh:mm a
+pt,pt-pt	dd-MM-yyyy H:mm
+ru,ru-ru,uk,uk-ua	dd.MM.yy H:mm
+bg,bg-bg,de,de-at,de-ch,de-de,de-gr,de-lu,fr-ch,it-ch,nn-no,no,no-no,pl-pl	dd.MM.yy HH:mm
+hr-hr	dd.MM.yy. HH:mm
+ro,ro-ro,tr,tr-tr	dd.MM.yyyy HH:mm
+it,it-it	dd/MM/yy H.mm
+es-ec,id-id	dd/MM/yy H:mm
+ca,ca-es,en-gb,en-ie,es-ar,fr,fr-fr,fr-lu,pt-br	dd/MM/yy HH:mm
+zh-sg	dd/MM/yy a hh:mm
+en-ca	dd/MM/yy h:mm a
+ar,ar-ae,ar-bh,ar-dz,ar-eg,ar-iq,ar-jo,ar-kw,ar-lb,ar-ly,ar-ma,ar-om,ar-qa,ar-sa,ar-sd,ar-sy,ar-tn,ar-ye,es-cr,es-do,es-pe,es-py,es-uy,es-ve	dd/MM/yy hh:mm a
+en-mt,ga-ie,mt,mt-mt	dd/MM/yyyy HH:mm
+ms-my	dd/MM/yyyy h:mm
+el-cy	dd/MM/yyyy h:mm a
+zh-hk	yy'年'M'月'd'日' ah:mm
+zh,zh-cn	yy-M-d ah:mm
+fr-ca,pl,sr-ba	yy-MM-dd HH:mm
+sq,sq-al	yy-MM-dd h.mm.a
+ko,ko-kr	yy. M. d a h:mm
+lt,lt-lt	yy.M.d HH.mm
+lv,lv-lv	yy.d.M HH:mm
+ja,ja-jp	yy/MM/dd H:mm
+ga,id,ms	yy/MM/dd HH:mm
+sv,sv-se	yyyy-MM-dd HH:mm
+hr	yyyy.MM.dd HH:mm
+hu,hu-hu	yyyy.MM.dd. H:mm
+zh-tw	yyyy/M/d a h:mm
+en-za	yyyy/MM/dd h:mm a
