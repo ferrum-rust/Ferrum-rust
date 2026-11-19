@@ -39,27 +39,17 @@
 ### 요구 사항
 - **운영체제**: Windows 10 / 11 (64-bit)
 - **그래픽**: Vulkan 1.2 이상을 지원하는 GPU 및 최신 드라이버
-- **개발 도구**:
-  - [Rust](https://rustup.rs/) (`stable-x86_64-pc-windows-msvc`)
-  - [Python 3.9+](https://www.python.org/) (최초 리소스 추출 스크립트 실행용)
-- **원본 클라이언트**: `%APPDATA%\.minecraft` 경로에 공식 런처로 한 번 이상 실행된 **Minecraft 1.8.9** 설치본
+- **개발 도구**: [Rust](https://rustup.rs/) (`stable-x86_64-pc-windows-msvc`)
+- **원본 클라이언트**: `%APPDATA%\.minecraft` 경로에 공식 런처로 한 번 이상 실행된 **Minecraft 1.8.9** 설치본 및 로컬 추출 리소스(`.local/resources`)
 
-### 1. 리소스 준비
-로컬에 설치된 Minecraft 1.8.9에서 텍스처·사운드·언어 파일을 `.local/resources`로 가져옵니다.
-
-```bat
-decompile.bat
-resources.bat
-```
-
-### 2. 릴리즈 빌드
+### 1. 릴리즈 빌드
 클라이언트 본체(`ferrum189.exe`)와 계정 런처(`launcher.exe`)를 빌드합니다.
 
 ```powershell
 cargo build --release --locked --bins
 ```
 
-### 3. 실행
+### 2. 실행
 배치 스크립트 또는 빌드된 런처로 실행할 수 있습니다.
 
 ```bat
@@ -118,7 +108,6 @@ Ferrum-rust/
 │   ├── commands/           # 싱글플레이 슬래시 명령어 처리기
 │   └── ui/                 # 메뉴·인벤토리·채팅·Sodium 스타일 비디오 설정 UI
 ├── sodium-dev/             # 비디오 설정 UI 아이콘 리소스 참조
-├── scripts/                # 리소스 추출·원본 비교·성능 측정 보조 스크립트 (Python / PowerShell)
 ├── tools/java/             # 개발 중 원본 동작 대조에 사용하는 오라클 도구 코드
 └── docs/                   # 상세 기술 문서
     ├── compatibility.md    # 기능별 구현 및 호환 범위 정리

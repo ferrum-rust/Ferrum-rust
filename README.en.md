@@ -39,27 +39,17 @@
 ### Prerequisites
 - **OS**: Windows 10 / 11 (64-bit)
 - **GPU**: Vulkan 1.2+ capable graphics card with up-to-date drivers
-- **Toolchain**:
-  - [Rust](https://rustup.rs/) (`stable-x86_64-pc-windows-msvc`)
-  - [Python 3.9+](https://www.python.org/) (used once to prepare local assets)
-- **Minecraft 1.8.9**: Official Minecraft 1.8.9 launched at least once under `%APPDATA%\.minecraft`
+- **Toolchain**: [Rust](https://rustup.rs/) (`stable-x86_64-pc-windows-msvc`)
+- **Minecraft 1.8.9**: Official Minecraft 1.8.9 installed under `%APPDATA%\.minecraft` with prepared local resources (`.local/resources`)
 
-### 1. Prepare Local Assets
-Extract textures, sounds, and language files from your local Minecraft 1.8.9 installation into `.local/resources`:
-
-```bat
-decompile.bat
-resources.bat
-```
-
-### 2. Build Release Binaries
+### 1. Build Release Binaries
 Compile both the client (`ferrum189.exe`) and the native Win32 launcher (`launcher.exe`):
 
 ```powershell
 cargo build --release --locked --bins
 ```
 
-### 3. Run
+### 2. Run
 Launch via `start.bat` or the account launcher:
 
 ```bat
@@ -118,7 +108,6 @@ Ferrum-rust/
 │   ├── commands/           # Singleplayer slash command engine
 │   └── ui/                 # Menus, inventory windows, chat & Sodium-style video settings UI
 ├── sodium-dev/             # UI icon resources referenced at compile time
-├── scripts/                # Asset extraction, reference comparison & benchmarking scripts (Python / PowerShell)
 ├── tools/java/             # Oracle utilities used during development to verify 1.8.9 behavior
 └── docs/                   # Technical documentation
     ├── compatibility.md    # Feature compatibility & implementation matrix

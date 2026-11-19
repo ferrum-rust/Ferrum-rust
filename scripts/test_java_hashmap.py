@@ -1,9 +1,0 @@
-"""Collection-order oracle for the Java runtime used with the owned JAR."""
-import json,os,subprocess
-from pathlib import Path
-from vanilla_world import ROOT,classpath,java_executable
-cp=classpath(Path(os.environ['APPDATA'])/'.minecraft/versions/1.8.9/1.8.9.jar');out=ROOT/'.local/oracles/hashmap';out.mkdir(parents=True,exist_ok=True)
-subprocess.run(['javac','--release','8','-cp',cp,'-d',str(out),str(ROOT/'tools/java/HashMapOracle.java')],check=True)
-data=json.loads(subprocess.check_output([java_executable(),'-cp',str(out)+os.pathsep+cp,'HashMapOracle']))
-(ROOT/'tests/fixtures/vanilla189-hashmap.json').write_text(json.dumps(data,separators=(',',':'))+'\n',encoding='utf-8')
-print(f'{len(data["cases"])} HashMap cases, {sum(len(c["input"]) for c in data["cases"])} insertion/traversal checkpoints, runtime {data["runtime"]}')
