@@ -391,8 +391,19 @@ impl Resources {
             ascii_width[c as usize] = (occupied as f32 * 8.0 / cell as f32).round() + 1.;
         }
         ascii_width[32] = 4.0;
-        let registry: Registry =
-            serde_json::from_slice(&std::fs::read(".local/resources/registry.json")?)?;
+        let registry_bytes = match std::fs::read(".local/resources/registry.json") {
+            Ok(bytes) => bytes,
+            Err(_) => {
+                use std::io::Read;
+                let mut dec = flate2::read::GzDecoder::new(
+                    &include_bytes!("vanilla/registry189.json.gz")[..],
+                );
+                let mut out = Vec::new();
+                dec.read_to_end(&mut out)?;
+                out
+            }
+        };
+        let registry: Registry = serde_json::from_slice(&registry_bytes)?;
         let mut item_textures = HashMap::new();
         for (&id, def) in &registry.items {
             let path = format!("models/item/{}.json", def.name);

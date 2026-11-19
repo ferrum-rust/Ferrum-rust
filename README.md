@@ -40,7 +40,7 @@
 - **운영체제**: Windows 10 / 11 (64-bit)
 - **그래픽**: Vulkan 1.2 이상을 지원하는 GPU 및 최신 드라이버
 - **개발 도구**: [Rust](https://rustup.rs/) (`stable-x86_64-pc-windows-msvc`)
-- **원본 클라이언트**: `%APPDATA%\.minecraft` 경로에 공식 런처로 한 번 이상 실행된 **Minecraft 1.8.9** 설치본 및 로컬 추출 리소스(`.local/resources`)
+- **원본 클라이언트**: 공식 마인크래프트 런처에서 **1.8.9** 버전을 한 번 이상 실행해 `%APPDATA%\.minecraft\versions\1.8.9\1.8.9.jar`가 생성되어 있어야 합니다. *(첫 실행 시 런처가 이를 감지해 `.local/resources`로 자동 덤프합니다.)*
 
 ### 1. 릴리즈 빌드
 클라이언트 본체(`ferrum189.exe`)와 계정 런처(`launcher.exe`)를 빌드합니다.

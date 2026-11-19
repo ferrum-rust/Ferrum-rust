@@ -28,6 +28,7 @@ mod lighting_view;
 mod mesh;
 mod models;
 mod ms_auth;
+mod resource_dump;
 mod native_session;
 mod populated_world;
 mod nbt;
@@ -337,6 +338,24 @@ fn main() -> Result<()> {
             }
         }
         return Ok(());
+    }
+    if !std::path::Path::new(".local/resources/manifest.json").is_file() {
+        let dest = root.join(".local").join("resources");
+        if let Some((mc_dir, jar_src)) = resource_dump::find_appdata_189_jar() {
+            let dumped = resource_dump::ensure_dumped_resources(&mc_dir, &jar_src, &dest, |_, _, _| {})?;
+            if options.jar.is_none() {
+                options.jar = Some(dumped);
+            }
+            if let Ok(cwd) = std::env::current_dir() {
+                absolutize_cli_path(&cwd, &mut options.jar);
+                absolutize_cli_path(&cwd, &mut options.world);
+                absolutize_cli_path(&cwd, &mut options.benchmark_output_dir);
+                absolutize_cli_path(&cwd, &mut options.screenshot);
+            }
+            let _ = std::env::set_current_dir(&root);
+        } else if options.server_status.is_none() && !options.list_worlds {
+            anyhow::bail!("{}", resource_dump::MISSING_JAR_NOTICE);
+        }
     }
     if options.jar.is_none() {
         options.jar = Some(default_jar_path(&root));

@@ -94,8 +94,11 @@ pub fn now_epoch_secs() -> u64 {
 pub fn project_root() -> PathBuf {
     if let Ok(exe) = std::env::current_exe() {
         if let Some(exe_dir) = exe.parent() {
-            // If running from workspace root (e.g. C:\Users\a\Desktop\hi\클라이언트.exe)
-            if exe_dir.join("Cargo.toml").is_file() || exe_dir.join(".local").is_dir() {
+            // If running from workspace root or dist folder (e.g. 클라이언트.exe next to ferrum189.exe)
+            if exe_dir.join("Cargo.toml").is_file()
+                || exe_dir.join(".local").is_dir()
+                || exe_dir.join("ferrum189.exe").is_file()
+            {
                 return exe_dir.to_path_buf();
             }
             // If running from target\release\launcher.exe or target\debug\...

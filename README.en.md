@@ -40,7 +40,7 @@
 - **OS**: Windows 10 / 11 (64-bit)
 - **GPU**: Vulkan 1.2+ capable graphics card with up-to-date drivers
 - **Toolchain**: [Rust](https://rustup.rs/) (`stable-x86_64-pc-windows-msvc`)
-- **Minecraft 1.8.9**: Official Minecraft 1.8.9 installed under `%APPDATA%\.minecraft` with prepared local resources (`.local/resources`)
+- **Minecraft 1.8.9**: Launch **1.8.9** at least once in the official Minecraft Launcher so `%APPDATA%\.minecraft\versions\1.8.9\1.8.9.jar` exists. *(On first play, the launcher automatically detects and dumps resources into `.local/resources`.)*
 
 ### 1. Build Release Binaries
 Compile both the client (`ferrum189.exe`) and the native Win32 launcher (`launcher.exe`):

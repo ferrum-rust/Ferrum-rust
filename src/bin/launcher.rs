@@ -2,6 +2,8 @@
 
 #[path = "../ms_auth.rs"]
 mod ms_auth;
+#[path = "../resource_dump.rs"]
+mod resource_dump;
 
 use ms_auth::{AccountStore, AuthenticatedAccount, DeviceCodePrompt, PollOutcome};
 use std::{
@@ -164,6 +166,7 @@ unsafe extern "system" {
     fn CloseClipboard() -> i32;
     fn GetDC(hwnd: isize) -> isize;
     fn ReleaseDC(hwnd: isize, hdc: isize) -> i32;
+    fn MessageBoxW(hwnd: isize, text: *const u16, caption: *const u16, flags: u32) -> i32;
 }
 
 #[link(name = "gdi32")]
@@ -320,8 +323,40 @@ enum WorkerMsg {
     AuthSuccess(AuthenticatedAccount),
     AccountSaved(AccountStore),
     AuthError(String),
+    DumpProgress { done: usize, total: usize, stage: String },
+    MissingJarAlert,
     LaunchSuccess(String),
     LaunchError(String),
+}
+
+#[derive(Clone, Debug)]
+enum ResourceUiState {
+    Ready(PathBuf),
+    NeedsDump(PathBuf),
+    Dumping { done: usize, total: usize, stage: String },
+    Missing,
+}
+
+fn detect_resource_state() -> ResourceUiState {
+    if let Some((_, jar_path)) = resource_dump::find_appdata_189_jar() {
+        let dest = ms_auth::project_root().join(".local").join("resources");
+        if resource_dump::is_dump_ready(&jar_path, &dest) {
+            ResourceUiState::Ready(jar_path)
+        } else {
+            ResourceUiState::NeedsDump(jar_path)
+        }
+    } else {
+        ResourceUiState::Missing
+    }
+}
+
+fn show_missing_jar_alert(hwnd: isize) {
+    const MB_OK_ICONWARNING: u32 = 0x0000_0030;
+    let body = wide(resource_dump::MISSING_JAR_POPUP);
+    let title = wide("Ferrum 1.8.9 — 리소스 확인");
+    unsafe {
+        MessageBoxW(hwnd, body.as_ptr(), title.as_ptr(), MB_OK_ICONWARNING);
+    }
 }
 
 struct WorkerEvent {
@@ -343,6 +378,7 @@ enum HitTarget {
     CopyOpenLink,
     CancelAuth,
     SelectAccount(usize),
+    RefreshResources,
     Launch,
 }
 
@@ -406,6 +442,8 @@ struct AppState {
     fonts: Option<Fonts>,
     store_path: PathBuf,
     store: AccountStore,
+    resource_state: ResourceUiState,
+    last_res_probe: Instant,
     mouse: Point,
     scroll: usize,
     status: String,
@@ -423,10 +461,19 @@ static STATE: OnceLock<Mutex<AppState>> = OnceLock::new();
 
 impl AppState {
     fn new(scale: f32, store_path: PathBuf, store: AccountStore) -> Self {
-        let status = if let Some(acc) = store.selected() {
-            format!("준비 완료 — '{}' Microsoft 계정으로 멀티플레이어 실행 가능", acc.username)
+        let resource_state = detect_resource_state();
+        let (status, status_color) = if matches!(resource_state, ResourceUiState::Missing) {
+            (resource_dump::MISSING_JAR_NOTICE.to_owned(), COL_ERR)
+        } else if let Some(acc) = store.selected() {
+            (
+                format!("준비 완료 — '{}' Microsoft 계정으로 멀티플레이어 실행 가능", acc.username),
+                COL_MINT,
+            )
         } else {
-            "Microsoft 계정을 추가하거나 LAUNCH를 눌러 게임을 실행하세요.".into()
+            (
+                "Microsoft 계정을 추가하거나 LAUNCH를 눌러 게임을 실행하세요.".into(),
+                COL_MINT,
+            )
         };
         let (tx, rx) = mpsc::channel();
         Self {
@@ -435,10 +482,12 @@ impl AppState {
             fonts: None,
             store_path,
             store,
+            resource_state,
+            last_res_probe: Instant::now(),
             mouse: Point { x: -1, y: -1 },
             scroll: 0,
             status,
-            status_color: COL_MINT,
+            status_color,
             active_prompt: None,
             auth_cancel: None,
             saving_account: false,
@@ -446,6 +495,22 @@ impl AppState {
             tx,
             rx,
             hitboxes: Vec::new(),
+        }
+    }
+
+    fn poll_resource_state_if_idle(&mut self) {
+        if self.launching || self.last_res_probe.elapsed() < Duration::from_secs(2) {
+            return;
+        }
+        self.last_res_probe = Instant::now();
+        let was_missing = matches!(self.resource_state, ResourceUiState::Missing);
+        if was_missing {
+            let next = detect_resource_state();
+            if !matches!(next, ResourceUiState::Missing) {
+                self.resource_state = next;
+                self.status = "✓ %APPDATA%\\.minecraft 에서 1.8.9.jar 감지됨! LAUNCH를 눌러 시작하세요.".into();
+                self.status_color = COL_MINT;
+            }
         }
     }
 
@@ -556,14 +621,28 @@ impl AppState {
                     self.status = format!("로그인 실패: {err}");
                     self.status_color = COL_ERR;
                 }
+                WorkerMsg::DumpProgress { done, total, stage } => {
+                    let pct = (done.saturating_mul(100) / total.max(1)).min(100);
+                    self.status = format!("{stage} ({pct}%)");
+                    self.status_color = COL_MINT;
+                    self.resource_state = ResourceUiState::Dumping { done, total, stage };
+                }
+                WorkerMsg::MissingJarAlert => {
+                    self.launching = false;
+                    self.resource_state = ResourceUiState::Missing;
+                    self.status = resource_dump::MISSING_JAR_NOTICE.into();
+                    self.status_color = COL_ERR;
+                }
                 WorkerMsg::LaunchSuccess(msg) => {
                     self.launching = false;
+                    self.resource_state = detect_resource_state();
                     self.store = AccountStore::load_from(&self.store_path).unwrap_or_default();
                     self.status = msg;
                     self.status_color = COL_MINT;
                 }
                 WorkerMsg::LaunchError(err) => {
                     self.launching = false;
+                    self.resource_state = detect_resource_state();
                     self.status = format!("실행 실패: {err}");
                     self.status_color = COL_ERR;
                 }
@@ -615,29 +694,78 @@ impl AppState {
         });
     }
 
-    fn start_launch(&mut self) {
+    fn start_launch(&mut self) -> bool {
         if self.launching || self.auth_cancel.is_some() {
-            return;
+            return false;
         }
         let Some(exe_path) = Self::locate_game_binary() else {
             self.status = "ferrum189.exe 실행 파일을 찾을 수 없습니다 (target\\release\\ferrum189.exe 확인 필요).".into();
             self.status_color = COL_ERR;
-            return;
+            return false;
         };
+        let Some((mc_dir, jar_src)) = resource_dump::find_appdata_189_jar() else {
+            self.resource_state = ResourceUiState::Missing;
+            self.status = resource_dump::MISSING_JAR_NOTICE.into();
+            self.status_color = COL_ERR;
+            return true;
+        };
+
+        let root = ms_auth::project_root();
+        let dest_dir = root.join(".local").join("resources");
+        let needs_dump = !resource_dump::is_dump_ready(&jar_src, &dest_dir);
+
         self.launching = true;
-        self.status = if self.store.selected().is_some() {
-            "Microsoft 마인크래프트 세션 확인 및 Ferrum 1.8.9 실행 중...".into()
+        if needs_dump {
+            self.resource_state = ResourceUiState::Dumping {
+                done: 0,
+                total: 100,
+                stage: "1.8.9.jar 리소스 덤프 준비 중...".into(),
+            };
+            self.status = "%APPDATA%\\.minecraft 의 1.8.9.jar 리소스를 덤프하는 중...".into();
         } else {
-            "오프라인 모드로 Ferrum 1.8.9 실행 중...".into()
-        };
+            self.resource_state = ResourceUiState::Ready(jar_src.clone());
+            self.status = if self.store.selected().is_some() {
+                "Microsoft 마인크래프트 세션 확인 및 Ferrum 1.8.9 실행 중...".into()
+            } else {
+                "오프라인 모드로 Ferrum 1.8.9 실행 중...".into()
+            };
+        }
         self.status_color = COL_WARN;
 
         let store_path = self.store_path.clone();
         let tx = self.tx.clone();
         let hwnd = self.hwnd;
-        let root = ms_auth::project_root();
 
         std::thread::spawn(move || {
+            let dumped_jar = match resource_dump::ensure_dumped_resources(
+                &mc_dir,
+                &jar_src,
+                &dest_dir,
+                |done, total, stage| {
+                    post_event(
+                        &tx,
+                        hwnd,
+                        None,
+                        WorkerMsg::DumpProgress {
+                            done,
+                            total,
+                            stage: stage.to_owned(),
+                        },
+                    );
+                },
+            ) {
+                Ok(path) => path,
+                Err(e) => {
+                    post_event(
+                        &tx,
+                        hwnd,
+                        None,
+                        WorkerMsg::LaunchError(format!("1.8.9 리소스 덤프 실패: {e:#}")),
+                    );
+                    return;
+                }
+            };
+
             let session = AccountStore::load_from(&store_path).and_then(|mut store| {
                 let auth = store.ensure_fresh_selected(&store_path)?;
                 Ok((store, auth))
@@ -651,7 +779,7 @@ impl AppState {
             };
 
             let mut cmd = std::process::Command::new(&exe_path);
-            cmd.current_dir(&root);
+            cmd.current_dir(&root).arg("--jar").arg(&dumped_jar);
             let msg = if let Some(acc) = auth {
                 cmd.arg("--username")
                     .arg(&acc.username)
@@ -680,9 +808,10 @@ impl AppState {
             };
             post_event(&tx, hwnd, None, result);
         });
+        false
     }
 
-    fn on_click(&mut self, x: i32, y: i32) {
+    fn on_click(&mut self, x: i32, y: i32) -> bool {
         let clicked = self
             .hitboxes
             .iter()
@@ -690,7 +819,7 @@ impl AppState {
             .find(|h| h.enabled && h.rect.contains(x, y))
             .map(|h| h.target);
         let Some(target) = clicked else {
-            return;
+            return false;
         };
         match target {
             HitTarget::AddMicrosoft => self.start_add_microsoft(),
@@ -717,7 +846,7 @@ impl AppState {
                 self.present_prompt_link(copy_and_open_link);
             }
             HitTarget::CancelAuth => {
-                if self.saving_account { return; }
+                if self.saving_account { return false; }
                 if let Some(cancel) = self.auth_cancel.take() {
                     cancel.store(true, Ordering::Relaxed);
                 }
@@ -737,8 +866,28 @@ impl AppState {
                     self.status_color = COL_MINT;
                 }
             }
-            HitTarget::Launch => self.start_launch(),
+            HitTarget::RefreshResources => {
+                self.resource_state = detect_resource_state();
+                match &self.resource_state {
+                    ResourceUiState::Ready(_) => {
+                        self.status = "✓ 1.8.9.jar 및 로컬 덤프 리소스가 준비되어 있습니다.".into();
+                        self.status_color = COL_MINT;
+                    }
+                    ResourceUiState::NeedsDump(_) => {
+                        self.status = "✓ %APPDATA%\\.minecraft 에서 1.8.9.jar를 찾았습니다! LAUNCH 클릭 시 자동 덤프됩니다.".into();
+                        self.status_color = COL_MINT;
+                    }
+                    ResourceUiState::Missing => {
+                        self.status = resource_dump::MISSING_JAR_NOTICE.into();
+                        self.status_color = COL_ERR;
+                        return true;
+                    }
+                    ResourceUiState::Dumping { .. } => {}
+                }
+            }
+            HitTarget::Launch => return self.start_launch(),
         }
+        false
     }
 
     fn paint(&mut self, hdc: isize, width: i32, height: i32) {
@@ -989,12 +1138,16 @@ impl AppState {
             list_top += banner_h + self.s(12);
         }
 
+        // Resource Status Card geometry (above footer)
+        let res_card_h = self.s(66);
+        let res_card_top = footer_top - res_card_h - self.s(12);
+
         // Account List Area
         let list_rect = WinRect::new(
             pad,
             list_top,
             width - pad * 2,
-            (footer_top - self.s(12) - list_top).max(self.s(60)),
+            (res_card_top - self.s(12) - list_top).max(self.s(60)),
         );
         fill(hdc, list_rect, COL_HEADER);
         border(hdc, list_rect, COL_BORDER);
@@ -1140,6 +1293,263 @@ impl AppState {
                 self.hitboxes.push(HitBox {
                     rect: card,
                     target: HitTarget::SelectAccount(idx),
+                    enabled: can_change_account,
+                });
+            }
+        }
+
+        // Minecraft 1.8.9 Resource Status & Auto-Dump Card
+        let res_card = WinRect::new(pad, res_card_top, width - pad * 2, res_card_h);
+        match &self.resource_state {
+            ResourceUiState::Ready(jar_path) => {
+                fill(hdc, res_card, COL_CARD_SEL);
+                border(hdc, res_card, COL_MINT_DARK);
+
+                let tag = WinRect::new(
+                    res_card.left + self.s(12),
+                    res_card.top + self.s(14),
+                    self.s(64),
+                    self.s(38),
+                );
+                fill(hdc, tag, COL_MINT_DARK);
+                draw_text(
+                    hdc,
+                    fonts.body_bold,
+                    COL_TEXT,
+                    tag,
+                    "1.8.9",
+                    DT_SINGLELINE | DT_VCENTER | DT_CENTER | DT_NOPREFIX,
+                );
+
+                draw_text(
+                    hdc,
+                    fonts.body_bold,
+                    COL_MINT,
+                    WinRect::new(
+                        tag.right + self.s(12),
+                        res_card.top + self.s(10),
+                        res_card.right - tag.right - self.s(124),
+                        self.s(22),
+                    ),
+                    "✓ Minecraft 1.8.9 리소스 덤프 완료 (.local/resources)",
+                    DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX,
+                );
+                draw_text(
+                    hdc,
+                    fonts.small,
+                    COL_MUTED,
+                    WinRect::new(
+                        tag.right + self.s(12),
+                        res_card.top + self.s(34),
+                        res_card.right - tag.right - self.s(124),
+                        self.s(20),
+                    ),
+                    &format!("원본 확인됨: {}", jar_path.display()),
+                    DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX,
+                );
+
+                let ref_btn = WinRect::new(
+                    res_card.right - self.s(102),
+                    res_card.top + self.s(17),
+                    self.s(88),
+                    self.s(32),
+                );
+                draw_button(
+                    hdc,
+                    fonts.small,
+                    ref_btn,
+                    "다시 확인",
+                    can_change_account,
+                    ref_btn.contains(self.mouse.x, self.mouse.y),
+                    COL_BTN_SEC,
+                    COL_BTN_SEC_HOVER,
+                    COL_TEXT,
+                );
+                self.hitboxes.push(HitBox {
+                    rect: ref_btn,
+                    target: HitTarget::RefreshResources,
+                    enabled: can_change_account,
+                });
+            }
+            ResourceUiState::NeedsDump(jar_path) => {
+                fill(hdc, res_card, COL_CARD);
+                border(hdc, res_card, COL_BLUE);
+
+                let tag = WinRect::new(
+                    res_card.left + self.s(12),
+                    res_card.top + self.s(14),
+                    self.s(64),
+                    self.s(38),
+                );
+                fill(hdc, tag, COL_BLUE);
+                draw_text(
+                    hdc,
+                    fonts.body_bold,
+                    COL_TEXT,
+                    tag,
+                    "1.8.9",
+                    DT_SINGLELINE | DT_VCENTER | DT_CENTER | DT_NOPREFIX,
+                );
+
+                draw_text(
+                    hdc,
+                    fonts.body_bold,
+                    COL_TEXT,
+                    WinRect::new(
+                        tag.right + self.s(12),
+                        res_card.top + self.s(10),
+                        res_card.right - tag.right - self.s(124),
+                        self.s(22),
+                    ),
+                    "Minecraft 1.8.9 클라이언트 감지됨 — 첫 실행 시 자동 덤프",
+                    DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX,
+                );
+                draw_text(
+                    hdc,
+                    fonts.small,
+                    COL_MUTED,
+                    WinRect::new(
+                        tag.right + self.s(12),
+                        res_card.top + self.s(34),
+                        res_card.right - tag.right - self.s(124),
+                        self.s(20),
+                    ),
+                    &format!("감지 경로: {}", jar_path.display()),
+                    DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX,
+                );
+
+                let ref_btn = WinRect::new(
+                    res_card.right - self.s(102),
+                    res_card.top + self.s(17),
+                    self.s(88),
+                    self.s(32),
+                );
+                draw_button(
+                    hdc,
+                    fonts.small,
+                    ref_btn,
+                    "다시 확인",
+                    can_change_account,
+                    ref_btn.contains(self.mouse.x, self.mouse.y),
+                    COL_BTN_SEC,
+                    COL_BTN_SEC_HOVER,
+                    COL_TEXT,
+                );
+                self.hitboxes.push(HitBox {
+                    rect: ref_btn,
+                    target: HitTarget::RefreshResources,
+                    enabled: can_change_account,
+                });
+            }
+            ResourceUiState::Dumping { done, total, stage } => {
+                fill(hdc, res_card, COL_CARD_SEL);
+                border(hdc, res_card, COL_MINT);
+
+                let pct = ((*done).saturating_mul(100) / (*total).max(1)).min(100);
+                draw_text(
+                    hdc,
+                    fonts.body_bold,
+                    COL_MINT,
+                    WinRect::new(
+                        res_card.left + self.s(16),
+                        res_card.top + self.s(10),
+                        res_card.right - res_card.left - self.s(32),
+                        self.s(22),
+                    ),
+                    &format!("{stage}  ({pct}% · {done}/{total})"),
+                    DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX,
+                );
+
+                let bar_bg = WinRect::new(
+                    res_card.left + self.s(16),
+                    res_card.top + self.s(38),
+                    res_card.right - res_card.left - self.s(32),
+                    self.s(14),
+                );
+                fill(hdc, bar_bg, COL_BG);
+                border(hdc, bar_bg, COL_MINT_DARK);
+                let inner_w = (bar_bg.right - bar_bg.left - self.s(2)).max(0);
+                let fill_w = ((inner_w as usize).saturating_mul(*done) / (*total).max(1)) as i32;
+                if fill_w > 0 {
+                    fill(
+                        hdc,
+                        WinRect::new(
+                            bar_bg.left + self.s(1),
+                            bar_bg.top + self.s(1),
+                            fill_w.min(inner_w),
+                            (bar_bg.bottom - bar_bg.top - self.s(2)).max(1),
+                        ),
+                        COL_EMERALD,
+                    );
+                }
+            }
+            ResourceUiState::Missing => {
+                fill(hdc, res_card, rgb(42, 20, 24));
+                border(hdc, res_card, COL_ERR);
+
+                let tag = WinRect::new(
+                    res_card.left + self.s(12),
+                    res_card.top + self.s(14),
+                    self.s(64),
+                    self.s(38),
+                );
+                fill(hdc, tag, COL_ERR);
+                draw_text(
+                    hdc,
+                    fonts.body_bold,
+                    COL_TEXT,
+                    tag,
+                    "필수",
+                    DT_SINGLELINE | DT_VCENTER | DT_CENTER | DT_NOPREFIX,
+                );
+
+                draw_text(
+                    hdc,
+                    fonts.body_bold,
+                    COL_ERR,
+                    WinRect::new(
+                        tag.right + self.s(12),
+                        res_card.top + self.s(10),
+                        res_card.right - tag.right - self.s(124),
+                        self.s(22),
+                    ),
+                    resource_dump::MISSING_JAR_NOTICE,
+                    DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX,
+                );
+                draw_text(
+                    hdc,
+                    fonts.small,
+                    COL_TEXT,
+                    WinRect::new(
+                        tag.right + self.s(12),
+                        res_card.top + self.s(34),
+                        res_card.right - tag.right - self.s(124),
+                        self.s(20),
+                    ),
+                    "찾는 위치: %APPDATA%\\.minecraft\\versions\\1.8.9\\1.8.9.jar",
+                    DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX,
+                );
+
+                let ref_btn = WinRect::new(
+                    res_card.right - self.s(102),
+                    res_card.top + self.s(17),
+                    self.s(88),
+                    self.s(32),
+                );
+                draw_button(
+                    hdc,
+                    fonts.small,
+                    ref_btn,
+                    "다시 확인",
+                    can_change_account,
+                    ref_btn.contains(self.mouse.x, self.mouse.y),
+                    COL_BTN_SEC,
+                    COL_BTN_SEC_HOVER,
+                    COL_TEXT,
+                );
+                self.hitboxes.push(HitBox {
+                    rect: ref_btn,
+                    target: HitTarget::RefreshResources,
                     enabled: can_change_account,
                 });
             }
@@ -1299,6 +1709,9 @@ unsafe extern "system" fn wnd_proc(
             if let Some(lock) = STATE.get() {
                 if let Ok(mut st) = lock.lock() {
                     st.drain_worker();
+                    if msg == WM_TIMER {
+                        st.poll_resource_state_if_idle();
+                    }
                 }
             }
             unsafe {
@@ -1339,14 +1752,18 @@ unsafe extern "system" fn wnd_proc(
         WM_LBUTTONDOWN => {
             let x = (l_param & 0xFFFF) as i16 as i32;
             let y = ((l_param >> 16) & 0xFFFF) as i16 as i32;
+            let mut alert_missing_jar = false;
             if let Some(lock) = STATE.get() {
                 if let Ok(mut st) = lock.lock() {
                     st.mouse = Point { x, y };
-                    st.on_click(x, y);
+                    alert_missing_jar = st.on_click(x, y);
                 }
             }
             unsafe {
                 InvalidateRect(hwnd, ptr::null(), 0);
+            }
+            if alert_missing_jar {
+                show_missing_jar_alert(hwnd);
             }
             0
         }
@@ -1503,7 +1920,7 @@ fn main() {
 
     let style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE;
     let client_w = (780.0 * scale).round() as i32;
-    let client_h = (540.0 * scale).round() as i32;
+    let client_h = (600.0 * scale).round() as i32;
     let mut win_rc = WinRect::new(0, 0, client_w, client_h);
     unsafe {
         AdjustWindowRectEx(&mut win_rc, style, 0, 0);
